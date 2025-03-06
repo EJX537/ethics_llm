@@ -233,25 +233,30 @@ if __name__ == "__main__":
     scenario = (
         EthicalScenario.new().from_prebuilt(PrebuiltScenario.misinformation).build()
     )
-    agent = (
+
+    agentBuilder = (
         EthicalAgents.new()
         .with_models(
             [
-                Model.from_local("ollama/smollm2:1.7b-instruct-q5_K_M"),
                 Model.from_local("ollama/deepseek-r1:70b-llama-distill-q4_K_M"),
-                Model.from_local("ollama/qwq:32b-q4_K_M"),
-                Model.from_local("ollama/phi4:14b-q4_K_M"),
             ]
         )
         .api_key(os.getenv("OPENROUTER_API_KEY"))
-        .with_ethics([ExistingEthicalFramework.consequentialist])
-        .build()
     )
 
-    responses, ethics = agent.evaluate_scenario(scenario)
+    agent = agentBuilder.with_ethics([ExistingEthicalFramework.human_rights]).build()
 
-    # for k, v in responses.items():
-    # print(k, v)
+    result, ethics = agent.evaluate_scenario(scenario)
+    print(result)
+    print(ethics)
 
     if db:
-        save_responses(scenario, responses, ethics)
+        save_responses(scenario, result, ethics)
+
+    # for scenario_name, scenario in PrebuiltScenario.SCENARIOS.items():
+    #     scene = EthicalScenario.new().from_prebuilt(scenario).build()
+    #     for ethical_framework in ExistingEthicalFramework.available_frameworks.values():
+    #         agent = agentBuilder.with_ethics([ethical_framework]).build()
+    #         responses, ethics = agent.evaluate_scenario(scene)
+    #         if db:
+    #             save_responses(scenario, responses, ethics)
