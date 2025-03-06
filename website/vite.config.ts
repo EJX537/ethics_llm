@@ -3,7 +3,6 @@ import solidPlugin from 'vite-plugin-solid';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  base: '/ethics_llm/',
   plugins: [
     tailwindcss(),
     solidPlugin()
