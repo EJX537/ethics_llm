@@ -1,22 +1,33 @@
 class Model(str):
     available_models = [
-        "google/gemini-2.0-flash-001",
-        "anthropic/claude-3.5-sonnet",
-        "deepseek/deepseek-r1:free",
-        "openai/o1-mini",
+        "gemini/gemini-pro",
+        "anthropic/claude-3-5-sonnet-20241022",
+        "anthropic/claude-3-7-sonnet-20250219",
         "openai/gpt-4o-mini",
-        "google/gemma-2-9b-it",
-        "google/gemma-2-27b-it",
-        "qwen/qwen-2.5-72b-instruct",
-        "deepseek/deepseek-r1-distill-qwen-32b",
-        "x-ai/grok-2-1212",
+        "deepseek/deepseek-chat",
+        "deepseek/deepseek-reasoner",
     ]
 
-    def __new__(cls, model: str, validate: bool = True):
+    def __new__(cls, model: str, validate: bool = True, api_key: str = None):
         instance = super().__new__(cls, model)
         if validate and model not in cls.available_models:
             raise ValueError("Invalid model name")
+
+        # We can't set attributes in __new__, need to return the instance first
         return instance
+
+    def __init__(self, model: str, validate: bool = True, api_key: str = None):
+        # This will be called after __new__ creates the instance
+        # Here we can set the api_key as an attribute
+        self._api_key = api_key
+
+    @property
+    def api_key(self):
+        return self._api_key
+
+    @api_key.setter
+    def api_key(self, value):
+        self._api_key = value
 
     @classmethod
     def from_local(cls, model: str):
@@ -26,50 +37,35 @@ class Model(str):
     def is_local(self):
         return self.startswith("ollama")
 
+    def is_openai(self):
+        return self.startswith("openai")
+
+    def is_anthropic(self):
+        return self.startswith("anthropic")
+
+    def is_deepseek(self):
+        return self.startswith("deepseek")
+
     @property
     def models(self):
         return self.available_models
 
     @classmethod
-    def deepseek_r1(cls):
-        return cls("deepseek/deepseek-r1")
+    def deepseek_chat(cls, api_key: str):
+        return cls("deepseek/deepseek-chat", api_key=api_key)
 
     @classmethod
-    def deepseek_r1_distill_qwen(cls):
-        return cls("deepseek/deepseek-r1-distill-qwen-32b")
+    def deepseek_reasoner(cls, api_key: str):
+        return cls("deepseek/deepseek-reasoner", api_key=api_key)
 
     @classmethod
-    def gemini_2_0_flash_001(cls):
-        return cls("google/gemini-2.0-flash-001")
+    def claude_3_5_sonnet(cls, api_key: str):
+        return cls("anthropic/claude-3-5-sonnet-20241022", api_key=api_key)
 
     @classmethod
-    def gemma_2_9b_it(cls):
-        return cls("google/gemma-2-9b-it")
+    def claude_3_7_sonnet(cls, api_key: str):
+        return cls("anthropic/claude-3-7-sonnet-20250219", api_key=api_key)
 
     @classmethod
-    def gemma_2_27b_it(cls):
-        return cls("google/gemma-2-27b-it")
-
-    @classmethod
-    def claude_3_5_sonnet(cls):
-        return cls("anthropic/claude-3.5-sonnet")
-
-    @classmethod
-    def o1_mini(cls):
-        return cls("openai/o1-mini")
-
-    @classmethod
-    def gpt_4o_mini(cls):
-        return cls("openai/gpt-4o-mini")
-
-    @classmethod
-    def qwen_2_5_72b_instruct(cls):
-        return cls("qwen/qwen-2.5-72b-instruct")
-
-    @classmethod
-    def meta_llama_3_1_70b_instruct(cls):
-        return cls("meta-llama/llama-3.1-70b-instruct")
-
-    @classmethod
-    def grok_2_1212(cls):
-        return cls("x-ai/grok-2-1212")
+    def gpt_4o_mini(cls, api_key: str):
+        return cls("openai/gpt-4o-mini", api_key=api_key)
