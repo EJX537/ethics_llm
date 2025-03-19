@@ -3,6 +3,7 @@
 A tool for evaluating and analyzing ethical considerations in AI responses across different LLM providers.
 
 ⚠️⚠️ Website was written swiftly and untested ⚠️⚠️
+
 Hosting on Github does not support subpage routing correctly, IF I ever work on this again, I will host it on Cloudflare.
 
 ## Overview
