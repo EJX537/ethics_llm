@@ -6,6 +6,13 @@ A tool for evaluating and analyzing ethical considerations in AI responses acros
 
 Ethics by LLM allows you to compare responses from various large language models (LLMs) on ethically complex questions. This tool helps researchers, developers, and ethicists understand how different models approach challenging ethical scenarios.
 
+## Collected Data
+Turso read-only
+```
+TURSO_DATABASE_URL="libsql://llm-responses-ejx537.turso.io"
+TURSO_AUTH_TOKEN="eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicm8iLCJpYXQiOjE3NDI0MDk5MTgsImlkIjoiZTFiNDBhYzQtZjBkOS00N2U4LTgyOWUtYzEyYjYwZjlkZmNmIn0.VdEi0HFjh4dnrbBV3ubbBbCgSZiegCijZNwxXDgD3zlH_OwjKrBRMGUSLYWSc2z42dielNV6-c2HCwldkgqSCw"
+```
+
 ## Features
 
 - Query multiple LLM providers simultaneously (Anthropic, OpenAI, DeepSeek)
