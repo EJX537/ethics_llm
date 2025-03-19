@@ -2,6 +2,9 @@
 
 A tool for evaluating and analyzing ethical considerations in AI responses across different LLM providers.
 
+⚠️⚠️ Website was written swiftly and untested ⚠️⚠️
+Hosting on Github does not support subpage routing correctly, IF I ever work on this again, I will host it on Cloudflare.
+
 ## Overview
 
 Ethics by LLM allows you to compare responses from various large language models (LLMs) on ethically complex questions. This tool helps researchers, developers, and ethicists understand how different models approach challenging ethical scenarios.
